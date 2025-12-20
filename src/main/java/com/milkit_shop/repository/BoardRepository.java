@@ -8,13 +8,13 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board,Long> {
-  @Query("SELECT b FROM Board b " +
+  @Query("SELECT b FROM Board b join fetch b.member " +
       "WHERE b.title LIKE %:search% " +
       "OR b.content LIKE %:search% " +
       "ORDER BY b.Date DESC")
   List<Board> findBoardsBySearch(@Param("search") String search);
 
-  @Query("select b from Board b " +
+  @Query("select b from Board b " +"join fetch b.member "+
       "order by b.Date desc")
   List<Board> findAllBoards();
 }
